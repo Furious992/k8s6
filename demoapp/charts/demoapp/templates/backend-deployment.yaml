@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "demoapp.fullname" . }}-backend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          args:
+            - "-listen=:{{ .Values.backend.service.port }}"
+            - "-text={{ .Values.backend.message }} (release={{ .Release.Name }})"
+          ports:
+            - containerPort: {{ .Values.backend.service.port }}

@@ -1,0 +1,18 @@
+replicaCount: 1
+
+backend:
+  image:
+    repository: hashicorp/http-echo
+    tag: "0.2.3"
+  service:
+    port: 5678
+  message: "Hello from backend"
+
+frontend:
+  image:
+    repository: nginx
+    tag: "1.27"
+  service:
+    port: 80
+
+resources: {}
